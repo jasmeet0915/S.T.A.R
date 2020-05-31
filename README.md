@@ -5,6 +5,10 @@ Satellite Trajectory Animating & Rendering: Satellite Orbit Visualiser using Ble
 
 This project shows how you can create cool looking yet 'Scientifically Correct Orbital Simulations' for any satellite you want
 using Blender and Python.
+<br><br>
+<b>Project Video:</b> https://www.youtube.com/watch?v=Pl94gpMpK6M<br>
+<br>
+[![IAlt text](https://img.youtube.com/vi/Pl94gpMpK6M/0.jpg)](https://www.youtube.com/watch?v=Pl94gpMpK6M)
 
 <h2>Two Line Element (TLE) Set</h2>
 Orbit Prediction for any Earth-orbiting object is done using the Classical/Keplerian Orbital Elements. The orbital elements 
