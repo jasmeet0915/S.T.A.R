@@ -37,7 +37,8 @@ individual satellites and are used by Organizations to keep track of the satelli
    <li>This file extracts all the required orbital elements from the TLE data and passes it to <code>OrbitPropagator.py</code> which calculates the state vectors(position and velocity) for that satelliet at every timestep <code>dt</code>.<br>
      
   <li>The <code>OrbitPropagator.py</code> script makes use of the Ordinary Differential Equation Solver from the scipy module and applies it to the differential equation obtained by considering a 2 Body Gravitational Inetraction between the Earth and the Satellite.
-  <img src= "https://user-images.githubusercontent.com/23265149/83329701-a4203100-a2a8-11ea-8241-e7e07b04a1e8.png" width="600"/>
+  <img src= "https://user-images.githubusercontent.com/23265149/83329701-a4203100-a2a8-11ea-8241-e7e07b04a1e8.png" width="600"/><br><br>
+  <b>Note:</b> There are a lot more factors that are to be considered while calculating orbit trajectories of satellites like Earth's oblate shape, atmospheric drag, gravity due to moon etc. Currently the code does not take these perturbations into account but I will try and include them in a future version of the project using a more advanced SGP4 perturbation model.
   <br><br>
   <li>The location data for each satellite for every timestep is stored in a list and then written to the blender's particle cache files for every frame using the <code>particlecahce.py</code> script.<br>
   
