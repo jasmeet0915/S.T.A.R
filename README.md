@@ -32,7 +32,7 @@ individual satellites and are used by Organizations to keep track of the satelli
     </ol>
    <li>Copy the Starlink satellite TLE data from <a href="https://celestrak.com/NORAD/elements/starlink.txt">this link</a>.<br>
      
-   <li>Save the data in a "starlink.txt" file inside the data directory of the orbital_mechanics and execute the <code>main.py</code> file.<br>
+   <li>Save the data in a "starlink.txt" file inside the data directory of the orbital_mechanics and execute the <code>2BodyProblem.py</code> file.<br>
      
    <li>This file extracts all the required orbital elements from the TLE data and passes it to <code>OrbitPropagator.py</code> which calculates the state vectors(position and velocity) for that satelliet at every timestep <code>dt</code>.<br>
      
