@@ -1,5 +1,5 @@
 # S.T.A.R
-Satellite Trajectory Animating & Rendering: Satellite Orbit Visualiser using Blender 
+Satellite Trajectory Animating and Rendering: Satellite Orbit Visualiser using Blender 
 <br><br>
 <img src = "https://user-images.githubusercontent.com/23265149/83307886-3ed62c80-a223-11ea-8d5c-7f2c48bbf43b.png" width="600"/>
 
