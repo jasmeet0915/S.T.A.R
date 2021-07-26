@@ -36,6 +36,19 @@ def get_tle_data(path):
     return tle_data
 
 
+''' 
+Blender simulation data
+'''
+# fps of simulation
+sim_fps = 24
+
+# period of earth rotation in sim in seconds
+sim_earth_period = 120.0
+
+# real time to sim time conversion factor
+real2sim = sim_earth_period/(24.0 * 3600.0)
+
+
 if __name__ == "__main__":
     cb = init_central_body()
     sphere_coords = cb.plot_attributes()
@@ -48,7 +61,10 @@ if __name__ == "__main__":
         # create satellite object and propagate it using orbital elements
         sat1 = Satellite(sat_id=1, name="ISS", center_body=cb, sat_type="Communication")
         sat1r0, sat1v0 = sat1.propagate_with_tle(tle)
-        dt = sat1.period/190.0
+
+        # calculates real time dt for sim time dt of each frame
+        dt = 1/sim_fps * 1/real2sim 
+
         sat1r0 = sat1r0.tolist()
         sat1v0 = sat1v0.tolist()
         propagtor1 = op(sat1r0, sat1v0, sat1.period, dt=dt, central_body=cb)
