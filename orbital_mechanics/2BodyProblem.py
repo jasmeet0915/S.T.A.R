@@ -63,7 +63,7 @@ if __name__ == "__main__":
     for tle in tle_data:
         print("....Calculating State Vectors for Starlink No. " + str(count) + "....")
         # create satellite object and propagate it using orbital elements
-        sat1 = Satellite(sat_id=1, name="ISS", center_body=cb, sat_type="Communication")
+        sat1 = Satellite(sat_id=1, name="Starlink" + str(count), center_body=cb, sat_type="Communication")
         sat1r0, sat1v0 = sat1.propagate_with_tle(tle)
 
         # calculates real time dt for sim time dt of each frame
@@ -73,6 +73,8 @@ if __name__ == "__main__":
         sat1v0 = sat1v0.tolist()
         propagtor1 = op(sat1r0, sat1v0, sat1.period, dt=dt, central_body=cb)
         propagtor1.propagate()
+
+        # multiplying with factor to scale the vectors according to earth radius in sim
         propagtor1.rs = propagtor1.rs * 1/6378
 
         coords.append(propagtor1.rs.tolist())
