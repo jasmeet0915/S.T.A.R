@@ -1,5 +1,6 @@
 import os
 import numpy as np
+from numpy.core.arrayprint import printoptions
 from scipy.integrate import ode
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -54,7 +55,10 @@ if __name__ == "__main__":
     sphere_coords = cb.plot_attributes()
     tle_data = get_tle_data("data/starlink.txt")
 
-    count = 1
+    # list to store satellite coordinates
+    coords = [];
+
+    count = 0
 
     for tle in tle_data:
         print("....Calculating State Vectors for Starlink No. " + str(count) + "....")
@@ -70,48 +74,33 @@ if __name__ == "__main__":
         propagtor1 = op(sat1r0, sat1v0, sat1.period, dt=dt, central_body=cb)
         propagtor1.propagate()
         propagtor1.rs = propagtor1.rs * 1/6378
-        if count == 1:
-            coords = propagtor1.rs
-        else:
-            coords = np.concatenate((coords, propagtor1.rs), axis=1)
-        count= count + 1
+
+        coords.append(propagtor1.rs.tolist())
+        count = count + 1
 
 print(" ")
 print("....Creating final_coords list for writing location data to Blender's Particle Cache....")
 
-final_coords = []
-
-for k in range(coords.shape[0]):
-    a = coords[k].tolist()
-    t = [a[i:i+3] for i in range(0, len(a), 3)]
-    final_coords.append(t)
-
-for e in range(len(final_coords)):
-    for c in range(len(final_coords[e])):
-        final_coords[e][c] = tuple(final_coords[e][c])
-
-
 
 currentDirectory = os.getcwd()
 particleCachePath = os.path.normpath(currentDirectory + os.sep + os.pardir)+"/blendcache_earth1."
-
-
 cache = particlecache.PointCache(particleCachePath, 0)
 
 
-final_coords = final_coords * 15
+for cache_file in cache.files:
+    frame_coords = []
+    frame = cache_file[0]
 
+    # add coordinates of each satellite particle for the current frame in frame_coords
+    for coord in coords:
+        # using modulo operator as it cycles between 0 to len(coords)
+        frame_coords.append(coord[(frame-1) % len(coord)])
 
-count1 = 0
-for frame in cache.files:
-    print("....Writing in Location Data in" + str(frame[1]) + "file for frame no. " + str(frame[0]) + "....")
-    particle_frame = particlecache.CacheFrame(frame[1])
+    print("....Writing in Location Data in" + str(cache_file[1]) + "file for frame no. " + str(frame) + "....")
+    particle_frame = particlecache.CacheFrame(cache_file[1])
     particle_frame.read(particleCachePath, True)
     locdata = particle_frame.get_data('LOCATION')
-    particle_frame.set_data('LOCATION', final_coords[count1]) #at this point it's only in python
+    particle_frame.set_data('LOCATION', frame_coords) #at this point it's only in python
     particle_frame.write(particleCachePath)
     print(" ")
-    count1 = count1 + 1
-
-
 
